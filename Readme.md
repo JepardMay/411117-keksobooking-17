@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Veronika Palto](https://up.htmlacademy.ru/javascript/17/user/411117).
-* Наставник: `Неизвестно`.
+* Наставник: [Светлана Корякина](https://up.htmlacademy.ru/javascript/17/user/477401).
 
 ---
 
