@@ -15,7 +15,7 @@ var getRandomNumber = function (min, max, include) {
   return (Math.floor(Math.random() * (max - min)) + min);
 };
 
-var renderAdsMock = function (quantity) {
+var getMockData = function (quantity) {
   var arr = [];
   for (var i = 1; i <= quantity; i++) {
     arr.push({
@@ -35,7 +35,7 @@ var renderAdsMock = function (quantity) {
   return arr;
 };
 
-var ads = renderAdsMock(8);
+var ads = getMockData(8);
 
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
@@ -46,21 +46,21 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 
 
-var renderPin = function (pin) {
+var createPin = function (pin) {
   var pinElement = mapPinTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + (pin.location.x - PIN_WIDTH / 2) + 'px; top: ' + (pin.location.y - PIN_HEIGHT / 2) + 'px';
+  pinElement.style = 'left: ' + (pin.location.x - PIN_WIDTH / 2) + 'px; top: ' + (pin.location.y - PIN_HEIGHT) + 'px';
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.type;
 
   return pinElement;
 };
 
-var createPin = function (pins) {
+var setAttributes = function (pins) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < pins.length; i++) {
-    fragment.appendChild(renderPin(pins[i]));
+    fragment.appendChild(createPin(pins[i]));
     mapPinsList.appendChild(fragment);
   }
 };
 
-createPin(ads);
+setAttributes(ads);
