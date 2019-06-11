@@ -55,7 +55,7 @@ var createPin = function (pin) {
   return pinElement;
 };
 
-var setAttributes = function (pins) {
+var renderPin = function (pins) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < pins.length; i++) {
     fragment.appendChild(createPin(pins[i]));
@@ -63,4 +63,4 @@ var setAttributes = function (pins) {
   }
 };
 
-setAttributes(ads);
+renderPin(ads);
