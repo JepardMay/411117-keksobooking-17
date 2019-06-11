@@ -15,114 +15,40 @@ var getRandomNumber = function (min, max, include) {
   return (Math.floor(Math.random() * (max - min)) + min);
 };
 
-var ads = [
-  {
-    author: {
-      avatar: 'img/avatars/user01.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user02.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user03.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user04.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user05.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user06.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user07.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
-  },
-  {
-    author: {
-      avatar: 'img/avatars/user08.png'
-    },
-    offer: {
-      type: getRandomElement(HOUSES_TYPES)
-    },
-    location: {
-      x: getRandomNumber(1, MAP_WIDTH),
-      y: getRandomNumber(130, 630, true)
-    }
+var renderAdsMock = function (quantity) {
+  var arr = [];
+  for (var i = 1; i <= quantity; i++) {
+    arr.push({
+      author: {
+        avatar: 'img/avatars/user0' + i + '.png'
+      },
+      offer: {
+        type: getRandomElement(HOUSES_TYPES)
+      },
+      location: {
+        x: getRandomNumber(1, MAP_WIDTH),
+        y: getRandomNumber(130, 630, true)
+      }
+    });
   }
-];
+
+  return arr;
+};
+
+var ads = renderAdsMock(8);
 
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
 var mapPinsList = document.querySelector('.map__pins');
 var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+
 
 var renderPin = function (pin) {
   var pinElement = mapPinTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + pin.location.x + 'px; top: ' + pin.location.y + 'px';
+  pinElement.style = 'left: ' + (pin.location.x - PIN_WIDTH / 2) + 'px; top: ' + (pin.location.y - PIN_HEIGHT / 2) + 'px';
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.type;
 
@@ -138,4 +64,3 @@ var createPin = function (pins) {
 };
 
 createPin(ads);
-
