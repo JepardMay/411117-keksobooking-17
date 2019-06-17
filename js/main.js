@@ -1,8 +1,28 @@
 'use strict';
 
+// Константы
 var HOUSES_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var MAP_WIDTH = document.querySelector('.map').offsetWidth;
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_TAIL_HEIGHT = 22;
 
+// Переменные
+var map = document.querySelector('.map');
+var mapPinsList = document.querySelector('.map__pins');
+var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+var adForm = document.querySelector('.ad-form');
+var adInputs = adForm.querySelectorAll('input, select');
+var mapFilter = map.querySelector('.map__filters');
+var mapFiltersInputs = mapFilter.querySelectorAll('input, select');
+
+var mapMainPin = map.querySelector('.map__pin--main');
+var addressInput = adForm.querySelector('#address');
+
+// Функции
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -35,17 +55,6 @@ var getMockData = function (quantity) {
   return arr;
 };
 
-var ads = getMockData(8);
-
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
-
-var mapPinsList = document.querySelector('.map__pins');
-var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var PIN_WIDTH = 50;
-var PIN_HEIGHT = 70;
-
-
 var createPin = function (pin) {
   var pinElement = mapPinTemplate.cloneNode(true);
   pinElement.style = 'left: ' + (pin.location.x - PIN_WIDTH / 2) + 'px; top: ' + (pin.location.y - PIN_HEIGHT) + 'px';
@@ -63,4 +72,39 @@ var renderPin = function (pins) {
   }
 };
 
-renderPin(ads);
+var setDisabled = function (arr, disabled) {
+  for (var i = 0; i < arr.length; i++) {
+    if (disabled) {
+      arr[i].setAttribute('disabled', 'disabled');
+    } else {
+      arr[i].removeAttribute('disabled');
+    }
+  }
+};
+
+var getElementCoords = function (elem, width, height) {
+  var posY = elem.offsetLeft;
+  var posX = elem.offsetTop;
+  return (posY - width / 2) + ', ' + (posX - height);
+};
+
+// Обработчики событий
+mapMainPin.addEventListener('click', function () {
+  renderPin(ads);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  setDisabled(adInputs);
+  setDisabled(mapFiltersInputs);
+});
+
+mapMainPin.addEventListener('mouseup', function () {
+  addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT));
+});
+
+// Вызовы
+var ads = getMockData(8);
+
+addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT / 2));
+
+setDisabled(adInputs, true);
+setDisabled(mapFiltersInputs, true);
