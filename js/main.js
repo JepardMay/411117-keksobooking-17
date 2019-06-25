@@ -2,7 +2,7 @@
 
 // Константы
 var HOUSES_TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var MIN_MAP_WIDTH = 1;
+var MIN_MAP_WIDTH = 0;
 var MAX_MAP_WIDTH = document.querySelector('.map').offsetWidth;
 var MIN_MAP_HEIGHT = 130;
 var MAX_MAP_HEIGHT = 630;
@@ -121,20 +121,20 @@ mapMainPin.addEventListener('mousedown', function (evt) {
     var mapMainPinTop = (mapMainPin.offsetTop - shift.y);
     var mapMainPinLeft = (mapMainPin.offsetLeft - shift.x);
 
-    if (mapMainPinTop >= (MIN_MAP_HEIGHT - MAIN_PIN_HEIGHT) && mapMainPinTop <= MAX_MAP_HEIGHT) {
+    if (mapMainPinTop >= MIN_MAP_HEIGHT && mapMainPinTop <= (MAX_MAP_HEIGHT - MAIN_PIN_HEIGHT)) {
       mapMainPin.style.top = mapMainPinTop + 'px';
-    } else if (mapMainPinTop < (MIN_MAP_HEIGHT - MAIN_PIN_HEIGHT)) {
-      mapMainPin.style.top = (MIN_MAP_HEIGHT - MAIN_PIN_HEIGHT) + 'px';
-    } else if (mapMainPinTop > MAX_MAP_HEIGHT) {
-      mapMainPin.style.top = MAX_MAP_HEIGHT + 'px';
+    } else if (mapMainPinTop < MIN_MAP_HEIGHT) {
+      mapMainPin.style.top = MIN_MAP_HEIGHT + 'px';
+    } else if (mapMainPinTop > (MAX_MAP_HEIGHT - MAIN_PIN_HEIGHT)) {
+      mapMainPin.style.top = (MAX_MAP_HEIGHT - MAIN_PIN_HEIGHT) + 'px';
     }
 
-    if (mapMainPinLeft >= (MIN_MAP_WIDTH - MAIN_PIN_WIDTH / 2) && mapMainPinLeft <= (MAX_MAP_WIDTH - MAIN_PIN_WIDTH / 2)) {
+    if (mapMainPinLeft >= MIN_MAP_WIDTH && mapMainPinLeft <= (MAX_MAP_WIDTH - MAIN_PIN_WIDTH)) {
       mapMainPin.style.left = mapMainPinLeft + 'px';
-    } else if (mapMainPinLeft < (MIN_MAP_WIDTH - MAIN_PIN_WIDTH / 2)) {
-      mapMainPin.style.left = (MIN_MAP_WIDTH - MAIN_PIN_WIDTH / 2) + 'px';
-    } else if (mapMainPinLeft > (MAX_MAP_WIDTH - MAIN_PIN_WIDTH / 2)) {
-      mapMainPin.style.left = (MAX_MAP_WIDTH - MAIN_PIN_WIDTH / 2) + 'px';
+    } else if (mapMainPinLeft < MIN_MAP_WIDTH) {
+      mapMainPin.style.left = MIN_MAP_WIDTH + 'px';
+    } else if (mapMainPinLeft > (MAX_MAP_WIDTH - MAIN_PIN_WIDTH)) {
+      mapMainPin.style.left = (MAX_MAP_WIDTH - MAIN_PIN_WIDTH) + 'px';
     }
   };
 
