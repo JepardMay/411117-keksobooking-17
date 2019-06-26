@@ -137,7 +137,7 @@ mapMainPin.addEventListener('mousedown', function (evt) {
       mapMainPin.style.left = (MAX_MAP_WIDTH - MAIN_PIN_WIDTH) + 'px';
     }
 
-    addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT)) + '; ' + mapMainPin.style.top + ', ' + mapMainPin.style.left;
+    addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT));
   };
 
   var onMouseUp = function (upEvt) {
