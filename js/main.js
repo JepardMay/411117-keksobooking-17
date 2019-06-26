@@ -91,9 +91,9 @@ var setDisabled = function (arr, disabled) {
 };
 
 var getElementCoords = function (elem, width, height) {
-  var posY = elem.offsetLeft;
-  var posX = elem.offsetTop;
-  return (posY - width / 2) + ', ' + (posX - height);
+  var posX = elem.offsetLeft;
+  var posY = elem.offsetTop;
+  return Math.round((posX + width / 2)) + ', ' + Math.round((posY + height));
 };
 
 // Обработчики событий
@@ -136,11 +136,12 @@ mapMainPin.addEventListener('mousedown', function (evt) {
     } else if (mapMainPinLeft > (MAX_MAP_WIDTH - MAIN_PIN_WIDTH)) {
       mapMainPin.style.left = (MAX_MAP_WIDTH - MAIN_PIN_WIDTH) + 'px';
     }
+
+    addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT)) + '; ' + mapMainPin.style.top + ', ' + mapMainPin.style.left;
   };
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-    addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT));
 
     renderPin(ads);
     map.classList.remove('map--faded');
@@ -150,6 +151,8 @@ mapMainPin.addEventListener('mousedown', function (evt) {
 
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
+
+    addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT + MAIN_PIN_TAIL_HEIGHT));
   };
 
   document.addEventListener('mousemove', onMouseMove);
