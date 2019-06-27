@@ -8,7 +8,7 @@
   var timeinInput = adForm.querySelector('#timein');
   var timeoutInput = adForm.querySelector('#timeout');
 
-  window.setDisabled = function (arr, disabled) {
+  var setDisabled = function (arr, disabled) {
     for (var i = 0; i < arr.length; i++) {
       if (disabled) {
         arr[i].setAttribute('disabled', 'disabled');
@@ -46,5 +46,6 @@
     }
   });
 
-  window.setDisabled(adInputs, true);
+  setDisabled(adInputs, true);
+  window.setDisabled = setDisabled;
 })();
