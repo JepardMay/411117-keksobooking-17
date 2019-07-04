@@ -69,7 +69,7 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      window.renderPin(window.ads);
+      window.renderPins();
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
       window.setDisabled(adInputs);
