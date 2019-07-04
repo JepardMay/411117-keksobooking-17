@@ -28,12 +28,12 @@
     }
   };
 
-  var renderPinErrorHandler = function (errorMessage) {
+  var renderPinErrorHandler = function () {
     document.body.insertAdjacentElement('afterbegin', errorPopup);
   };
 
   window.renderPins = function () {
-    window.data.load(renderPinSuccessHandler, renderPinErrorHandler)
+    window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
   };
 
   errorPopup.addEventListener('click', function () {
