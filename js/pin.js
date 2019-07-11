@@ -2,6 +2,7 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var RENDERED_PINS_MAX_QUANTITY = 5;
   var ESC_KEYCODE = 27;
 
   var pins = [];
@@ -33,7 +34,7 @@
   };
 
   var renderPin = function (data) {
-    var takeNumber = data.length > 5 ? 5 : data.length;
+    var takeNumber = data.length > RENDERED_PINS_MAX_QUANTITY ? RENDERED_PINS_MAX_QUANTITY : data.length;
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < takeNumber; i++) {
       fragment.appendChild(createPin(data[i]));
