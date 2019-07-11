@@ -2,13 +2,26 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var RENDERED_PINS_MAX_QUANTITY = 5;
   var ESC_KEYCODE = 27;
+
+  var pins = [];
 
   var mapPinsList = document.querySelector('.map__pins');
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var errorPopup = errorTemplate.cloneNode(true);
   var errorButton = errorPopup.querySelector('.error__button');
+
+  var mapFilters = document.querySelector('.map__filters-container');
+  var houseTypeSelect = mapFilters.querySelector('#housing-type');
+  var houseType = houseTypeSelect.value;
+
+  houseTypeSelect.addEventListener('change', function () {
+    houseType = houseTypeSelect.value;
+    updatePins(pins);
+  });
 
   var createPin = function (pin) {
     var pinElement = mapPinTemplate.cloneNode(true);
@@ -20,12 +33,33 @@
     return pinElement;
   };
 
-  var renderPinSuccessHandler = function (pins) {
+  var renderPin = function (data) {
+    var takeNumber = data.length > RENDERED_PINS_MAX_QUANTITY ? RENDERED_PINS_MAX_QUANTITY : data.length;
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(createPin(pins[i]));
+    for (var i = 0; i < takeNumber; i++) {
+      fragment.appendChild(createPin(data[i]));
       mapPinsList.appendChild(fragment);
     }
+  };
+
+  var updatePins = function (data) {
+    var mapPins = Array.from(document.querySelectorAll('.map__pin:not(.map__pin--main)'));
+    mapPins.forEach(function (it) {
+      mapPinsList.removeChild(it);
+    });
+    if (houseType !== 'any') {
+      var sameHouseTypePins = data.filter(function (it) {
+        return it.offer.type === houseType;
+      });
+      return renderPin(sameHouseTypePins);
+    }
+
+    return renderPin(data);
+  };
+
+  var renderPinSuccessHandler = function (data) {
+    pins = data;
+    updatePins(pins);
   };
 
   var renderPinErrorHandler = function () {
