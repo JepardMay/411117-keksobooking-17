@@ -37,8 +37,11 @@
     var takeNumber = data.length > RENDERED_PINS_MAX_QUANTITY ? RENDERED_PINS_MAX_QUANTITY : data.length;
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < takeNumber; i++) {
-      fragment.appendChild(createPin(data[i]));
+      var pinButton = fragment.appendChild(createPin(data[i]));
       mapPinsList.appendChild(fragment);
+      pinButton.addEventListener('click', function () {
+        window.renderCard(data[2]);
+      });
     }
   };
 
