@@ -3,7 +3,6 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var RENDERED_PINS_MAX_QUANTITY = 5;
-  var ESC_KEYCODE = 27;
 
   var pins = [];
 
@@ -33,12 +32,21 @@
     return pinElement;
   };
 
+  var addPinClickHandler = function (pin, data) {
+    pin.addEventListener('click', function () {
+      window.renderCard(data);
+    });
+  };
+
   var renderPin = function (data) {
     var takeNumber = data.length > RENDERED_PINS_MAX_QUANTITY ? RENDERED_PINS_MAX_QUANTITY : data.length;
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < takeNumber; i++) {
-      fragment.appendChild(createPin(data[i]));
-      mapPinsList.appendChild(fragment);
+      if (data[i].offer) {
+        var pinButton = fragment.appendChild(createPin(data[i]));
+        mapPinsList.appendChild(fragment);
+        addPinClickHandler(pinButton, data[i]);
+      }
     }
   };
 
@@ -76,9 +84,7 @@
 
   if (errorPopup) {
     window.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        errorPopup.remove();
-      }
+      window.unit.isEscEvent(evt, errorPopup);
     });
   }
 
