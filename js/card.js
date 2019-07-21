@@ -16,6 +16,7 @@
 
   var createCard = function (card) {
     var cardElement = cardTemplate.cloneNode(true);
+    cardElement.querySelector('.popup__avatar').src = card.author.avatar;
     cardElement.querySelector('.popup__title').textContent = card.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь.';
@@ -36,21 +37,36 @@
 
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
 
+    var getPhotos = function () {
+      var listPhotos = cardElement.querySelector('.popup__photos');
+      var photoTemplate = listPhotos.querySelector('.popup__photo');
+      listPhotos.innerHTML = '';
+      card.offer.photos.forEach(function (it) {
+        var listElement = photoTemplate.cloneNode();
+        listElement.src = it;
+        listPhotos.appendChild(listElement);
+      });
+    };
+    getPhotos();
 
     return cardElement;
   };
 
   window.renderCard = function (data) {
+    if (document.querySelector('.popup')) {
+      document.querySelector('.popup').remove();
+    }
     var popup = createCard(data);
-
     mapFilters.insertAdjacentElement('beforebegin', popup);
-
     var popupClose = popup.querySelector('.popup__close');
     popupClose.addEventListener('click', function () {
       popup.remove();
+      window.removeEventListener('keydown', onPopupEscPress);
     });
-  };
 
-// В список .popup__features выведите все доступные удобства в объявлении.
-// В блок .popup__photos выведите все фотографии из списка offer.photos. Каждая из строк массива photos должна записываться как src соответствующего изображения.
+    var onPopupEscPress = function (evt) {
+      window.unit.isEscEvent(evt, popup);
+    };
+    document.addEventListener('keydown', onPopupEscPress);
+  };
 })();
