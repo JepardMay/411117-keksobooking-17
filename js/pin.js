@@ -72,25 +72,23 @@
 
   var renderPinErrorHandler = function () {
     document.body.insertAdjacentElement('afterbegin', errorPopup);
+
+    errorPopup.addEventListener('click', function () {
+      errorPopup.remove();
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      window.unit.isEscEvent(evt, errorPopup);
+    });
+
+    errorButton.addEventListener('click', function () {
+      errorPopup.remove();
+      window.renderPins();
+    });
   };
 
   window.renderPins = function () {
     window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
   };
-
-  errorPopup.addEventListener('click', function () {
-    errorPopup.remove();
-  });
-
-  if (errorPopup) {
-    window.addEventListener('keydown', function (evt) {
-      window.unit.isEscEvent(evt, errorPopup);
-    });
-  }
-
-  errorButton.addEventListener('click', function () {
-    errorPopup.remove();
-    window.renderPins();
-  });
 
 })();
