@@ -9,7 +9,7 @@
   var timeoutInput = adForm.querySelector('#timeout');
   var houseRoomNumber = adForm.querySelector('#room_number');
   var houseCapacity = adForm.querySelector('#capacity');
-  var houseCapacityOpacity = Array.from(houseCapacity.options);
+  var houseCapacityOptions = Array.from(houseCapacity.options);
 
   var setDisabled = function (arr, disabled) {
     for (var i = 0; i < arr.length; i++) {
@@ -22,8 +22,8 @@
   };
 
   var setCapacityDisabledOption = function (value) {
-    houseCapacityOpacity.forEach(function (it) {
-      if ((value !== '100' && it.value <= value && it.value !== '0') || (value === '100' && it.value === '0')) {
+    houseCapacityOptions.forEach(function (it) {
+      if ((value !== '100' && +it.value <= +value && it.value !== '0') || (value === '100' && it.value === '0')) {
         it.disabled = false;
       } else {
         it.disabled = true;
@@ -61,7 +61,7 @@
 
   houseRoomNumber.addEventListener('change', function () {
     setCapacityDisabledOption(houseRoomNumber.value);
-    var selectedOptions = houseCapacityOpacity.filter(function (it) {
+    var selectedOptions = houseCapacityOptions.filter(function (it) {
       return it.selected === true && !it.disabled;
     });
     if (selectedOptions.length === 0) {
