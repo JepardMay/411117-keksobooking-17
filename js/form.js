@@ -7,6 +7,9 @@
   var houseTypeInput = adForm.querySelector('#type');
   var timeinInput = adForm.querySelector('#timein');
   var timeoutInput = adForm.querySelector('#timeout');
+  var houseRoomNumber = adForm.querySelector('#room_number');
+  var houseCapacity = adForm.querySelector('#capacity');
+  var houseCapacityOpacity = Array.from(houseCapacity.options);
 
   var setDisabled = function (arr, disabled) {
     for (var i = 0; i < arr.length; i++) {
@@ -16,6 +19,16 @@
         arr[i].removeAttribute('disabled');
       }
     }
+  };
+
+  var setCapacityDisabledOption = function (value) {
+    houseCapacityOpacity.forEach(function (it) {
+      if ((value !== '100' && it.value <= value && it.value !== '0') || (value === '100' && it.value === '0')) {
+        it.disabled = false;
+      } else {
+        it.disabled = true;
+      }
+    });
   };
 
   houseTypeInput.addEventListener('change', function () {
@@ -46,6 +59,17 @@
     }
   });
 
+  houseRoomNumber.addEventListener('change', function () {
+    setCapacityDisabledOption(houseRoomNumber.value);
+    var selectedOptions = houseCapacityOpacity.filter(function (it) {
+      return it.selected === true && !it.disabled;
+    });
+    if (selectedOptions.length === 0) {
+      houseCapacity.value = houseCapacity.querySelector(':enabled').value;
+    }
+  });
+
   setDisabled(adInputs, true);
+  setCapacityDisabledOption(houseRoomNumber.value);
   window.setDisabled = setDisabled;
 })();
