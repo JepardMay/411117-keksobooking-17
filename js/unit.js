@@ -8,7 +8,7 @@
   };
 
   window.addEventListener('keydown', function (evt) {
-    if (currentPopup !== null && evt.keyCode === ESC_KEYCODE) {
+    if (currentPopup && evt.keyCode === ESC_KEYCODE) {
       currentPopup.remove();
     }
   });
