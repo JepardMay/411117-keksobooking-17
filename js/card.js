@@ -60,13 +60,9 @@
     mapFilters.insertAdjacentElement('beforebegin', popup);
     var popupClose = popup.querySelector('.popup__close');
     popupClose.addEventListener('click', function () {
-      window.removeEventListener('keydown', onPopupEscPress);
       popup.remove();
     });
 
-    var onPopupEscPress = function (evt) {
-      window.unit.isEscEvent(evt, popup);
-    };
-    document.addEventListener('keydown', onPopupEscPress);
+    window.setCurrentPopup(popup);
   };
 })();

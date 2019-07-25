@@ -9,10 +9,6 @@
   var mapPinsList = document.querySelector('.map__pins');
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var errorPopup = errorTemplate.cloneNode(true);
-  var errorButton = errorPopup.querySelector('.error__button');
-
   var mapFilters = document.querySelector('.map__filters-container');
   var houseTypeSelect = mapFilters.querySelector('#housing-type');
   var houseType = houseTypeSelect.value;
@@ -71,20 +67,8 @@
   };
 
   var renderPinErrorHandler = function () {
-    document.body.insertAdjacentElement('afterbegin', errorPopup);
-
-    errorPopup.addEventListener('click', function () {
-      errorPopup.remove();
-    });
-
-    window.addEventListener('keydown', function (evt) {
-      window.unit.isEscEvent(evt, errorPopup);
-    });
-
-    errorButton.addEventListener('click', function () {
-      errorPopup.remove();
-      window.renderPins();
-    });
+    document.body.insertAdjacentElement('afterbegin', window.error);
+    window.setCurrentPopup(window.error);
   };
 
   window.renderPins = function () {
