@@ -17,32 +17,45 @@
   var mapMainPin = map.querySelector('.map__pin--main');
   var addressInput = adForm.querySelector('#address');
 
+  var Coordinate = function (x, y) {
+    this.x = x;
+    this.y = y;
+  };
+
+  Coordinate.prototype.setCoords = function (x, y) {
+    this.x = x;
+    this.y = y;
+  };
+
   var getElementCoords = function (elem, width, height) {
     var posX = elem.offsetLeft;
     var posY = elem.offsetTop;
     return Math.round((posX + width / 2)) + ', ' + Math.round((posY + height));
   };
 
+  var defaultMainPin = {
+    coords: getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT / 2)),
+    top: mapMainPin.offsetTop,
+    left: mapMainPin.offsetLeft
+  };
+
+  window.setDefaultMainPinPosition = function () {
+    addressInput.value = defaultMainPin.coords;
+    mapMainPin.style.top = defaultMainPin.top + 'px';
+    mapMainPin.style.left = defaultMainPin.left + 'px';
+  };
+
   mapMainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
+    var startCoords = new Coordinate(evt.clientX, evt.clientY);
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
-      };
+      var shift = new Coordinate(startCoords.x - moveEvt.clientX, startCoords.y - moveEvt.clientY);
 
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
+      startCoords.setCoords(moveEvt.clientX, moveEvt.clientY);
 
       var mapMainPinTop = (mapMainPin.offsetTop - shift.y);
       var mapMainPinLeft = (mapMainPin.offsetLeft - shift.x);
@@ -85,6 +98,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  addressInput.value = getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT / 2));
+  addressInput.value = defaultMainPin.coords;
   window.setDisabled(mapFiltersInputs, true);
 })();

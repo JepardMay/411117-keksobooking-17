@@ -1,12 +1,15 @@
 'use strict';
-window.unit = (function () {
+(function () {
   var ESC_KEYCODE = 27;
+  var currentPopup = null;
 
-  return {
-    isEscEvent: function (evt, element) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        element.remove();
-      }
-    }
+  window.setCurrentPopup = function (popup) {
+    currentPopup = popup;
   };
+
+  window.addEventListener('keydown', function (evt) {
+    if (currentPopup && evt.keyCode === ESC_KEYCODE) {
+      currentPopup.remove();
+    }
+  });
 })();

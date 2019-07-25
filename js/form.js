@@ -3,6 +3,9 @@
   var adForm = document.querySelector('.ad-form');
   var adInputs = adForm.querySelectorAll('input, select');
 
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var successPopup = successTemplate.cloneNode(true);
+
   var pricePerNight = adForm.querySelector('#price');
   var houseTypeInput = adForm.querySelector('#type');
   var timeinInput = adForm.querySelector('#timein');
@@ -29,6 +32,28 @@
         it.disabled = true;
       }
     });
+  };
+
+  var renderFormSuccessHandler = function () {
+    document.querySelector('main').insertAdjacentElement('afterbegin', successPopup);
+    window.setCurrentPopup(successPopup);
+    pageReset();
+  };
+
+  var renderFormErrorHandler = function () {
+    document.querySelector('main').insertAdjacentElement('afterbegin', window.error);
+  };
+
+  var pageReset = function () {
+    adForm.reset();
+    var adsPins = Array.from(document.querySelectorAll('.map__pin:not(.map__pin--main)'));
+    adsPins.forEach(function (it) {
+      it.remove();
+    });
+    if (document.querySelector('.map__card')) {
+      document.querySelector('.map__card').remove();
+    }
+    window.setDefaultMainPinPosition();
   };
 
   houseTypeInput.addEventListener('change', function () {
@@ -67,6 +92,18 @@
     if (selectedOptions.length === 0) {
       houseCapacity.value = houseCapacity.querySelector(':enabled').value;
     }
+  });
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    var data = new FormData(adForm);
+
+    window.data.save(data, renderFormSuccessHandler, renderFormErrorHandler);
+  });
+
+  successPopup.addEventListener('click', function () {
+    successPopup.remove();
   });
 
   setDisabled(adInputs, true);
