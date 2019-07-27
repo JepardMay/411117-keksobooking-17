@@ -3,8 +3,10 @@
   var ESC_KEYCODE = 27;
   var currentPopup = null;
 
-  window.setCurrentPopup = function (popup) {
-    currentPopup = popup;
+  window.unit = {
+    setCurrentPopup: function (popup) {
+      currentPopup = popup;
+    }
   };
 
   window.addEventListener('keydown', function (evt) {
