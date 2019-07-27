@@ -102,43 +102,43 @@
     }
     if (houseFeatureWifi.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'wifi';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'wifi';
         });
       });
     }
     if (houseFeatureDishwasher.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'dishwasher';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'dishwasher';
         });
       });
     }
     if (houseFeatureParking.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'parking';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'parking';
         });
       });
     }
     if (houseFeatureWasher.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'washer';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'washer';
         });
       });
     }
     if (houseFeatureElevator.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'elevator';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'elevator';
         });
       });
     }
     if (houseFeatureConditioner.checked) {
       filterData = filterData.filter(function (it) {
-        return it.offer.features.some(function (arr) {
-          return arr === 'conditioner';
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'conditioner';
         });
       });
     }
