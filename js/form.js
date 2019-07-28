@@ -36,7 +36,7 @@
 
   var renderFormSuccessHandler = function () {
     document.querySelector('main').insertAdjacentElement('afterbegin', successPopup);
-    window.setCurrentPopup(successPopup);
+    window.unit.setCurrentPopup(successPopup);
     pageReset();
   };
 
@@ -53,7 +53,7 @@
     if (document.querySelector('.map__card')) {
       document.querySelector('.map__card').remove();
     }
-    window.setDefaultMainPinPosition();
+    window.map.setDefaultMainPinPosition();
   };
 
   houseTypeInput.addEventListener('change', function () {
@@ -108,5 +108,7 @@
 
   setDisabled(adInputs, true);
   setCapacityDisabledOption(houseRoomNumber.value);
-  window.setDisabled = setDisabled;
+  window.form = {
+    setDisabled: setDisabled
+  };
 })();

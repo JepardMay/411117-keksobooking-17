@@ -10,12 +10,32 @@
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   var mapFilters = document.querySelector('.map__filters-container');
+  var filtersForm = mapFilters.querySelector('.map__filters');
   var houseTypeSelect = mapFilters.querySelector('#housing-type');
   var houseType = houseTypeSelect.value;
+  var housePriceSelect = mapFilters.querySelector('#housing-price');
+  var housePrice = housePriceSelect.value;
+  var houseRoomSelect = mapFilters.querySelector('#housing-rooms');
+  var houseRoom = houseRoomSelect.value;
+  var houseGuestSelect = mapFilters.querySelector('#housing-guests');
+  var houseGuest = houseGuestSelect.value;
+  var houseFeatureSelect = mapFilters.querySelector('#housing-features');
+  var houseFeatureWifi = houseFeatureSelect.querySelector('#filter-wifi');
+  var houseFeatureDishwasher = houseFeatureSelect.querySelector('#filter-dishwasher');
+  var houseFeatureParking = houseFeatureSelect.querySelector('#filter-parking');
+  var houseFeatureWasher = houseFeatureSelect.querySelector('#filter-washer');
+  var houseFeatureElevator = houseFeatureSelect.querySelector('#filter-elevator');
+  var houseFeatureConditioner = houseFeatureSelect.querySelector('#filter-conditioner');
 
-  houseTypeSelect.addEventListener('change', function () {
+  filtersForm.addEventListener('change', function () {
     houseType = houseTypeSelect.value;
-    updatePins(pins);
+    housePrice = housePriceSelect.value;
+    houseRoom = houseRoomSelect.value;
+    houseGuest = houseGuestSelect.value;
+
+    window.debounce(function () {
+      updatePins(pins);
+    });
   });
 
   var createPin = function (pin) {
@@ -30,7 +50,7 @@
 
   var addPinClickHandler = function (pin, data) {
     pin.addEventListener('click', function () {
-      window.renderCard(data);
+      window.card.renderCard(data);
     });
   };
 
@@ -46,19 +66,93 @@
     }
   };
 
+  var setPriceRange = function (price) {
+    if (price < 10000) {
+      return 'low';
+    } else if (price >= 10000 && price < 50000) {
+      return 'middle';
+    } else if (price >= 50000) {
+      return 'high';
+    }
+
+    return 'any';
+  };
+
+  var filterPins = function (data) {
+    var filterData = data;
+    if (houseType !== 'any') {
+      filterData = filterData.filter(function (it) {
+        return it.offer.type === houseType;
+      });
+    }
+    if (housePrice !== 'any') {
+      filterData = filterData.filter(function (it) {
+        return setPriceRange(it.offer.price) === housePrice;
+      });
+    }
+    if (houseRoom !== 'any') {
+      filterData = filterData.filter(function (it) {
+        return it.offer.rooms === +houseRoom;
+      });
+    }
+    if (houseGuest !== 'any') {
+      filterData = filterData.filter(function (it) {
+        return it.offer.guests === +houseGuest;
+      });
+    }
+    if (houseFeatureWifi.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'wifi';
+        });
+      });
+    }
+    if (houseFeatureDishwasher.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'dishwasher';
+        });
+      });
+    }
+    if (houseFeatureParking.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'parking';
+        });
+      });
+    }
+    if (houseFeatureWasher.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'washer';
+        });
+      });
+    }
+    if (houseFeatureElevator.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'elevator';
+        });
+      });
+    }
+    if (houseFeatureConditioner.checked) {
+      filterData = filterData.filter(function (it) {
+        return it.offer.features.some(function (feathure) {
+          return feathure === 'conditioner';
+        });
+      });
+    }
+
+    return renderPin(filterData);
+  };
+
   var updatePins = function (data) {
     var mapPins = Array.from(document.querySelectorAll('.map__pin:not(.map__pin--main)'));
     mapPins.forEach(function (it) {
       mapPinsList.removeChild(it);
     });
-    if (houseType !== 'any') {
-      var sameHouseTypePins = data.filter(function (it) {
-        return it.offer.type === houseType;
-      });
-      return renderPin(sameHouseTypePins);
-    }
 
-    return renderPin(data);
+    return filterPins(data);
   };
 
   var renderPinSuccessHandler = function (data) {
@@ -68,11 +162,13 @@
 
   var renderPinErrorHandler = function () {
     document.body.insertAdjacentElement('afterbegin', window.error);
-    window.setCurrentPopup(window.error);
+    window.unit.setCurrentPopup(window.error);
   };
 
-  window.renderPins = function () {
-    window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
+  window.pin = {
+    renderPins: function () {
+      window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
+    }
   };
 
 })();

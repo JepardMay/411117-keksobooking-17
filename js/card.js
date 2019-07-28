@@ -6,11 +6,16 @@
 
   var setHouseType = function (type) {
     switch (type) {
-      case 'flat': return 'Квартира';
-      case 'bungalo': return 'Бунгало';
-      case 'house': return 'Дом';
-      case 'palace': return 'Дворец';
-      default: return 'Квартира';
+      case 'flat':
+        return 'Квартира';
+      case 'bungalo':
+        return 'Бунгало';
+      case 'house':
+        return 'Дом';
+      case 'palace':
+        return 'Дворец';
+      default:
+        return 'Квартира';
     }
   };
 
@@ -52,17 +57,19 @@
     return cardElement;
   };
 
-  window.renderCard = function (data) {
-    if (document.querySelector('.popup')) {
-      document.querySelector('.popup').remove();
-    }
-    var popup = createCard(data);
-    mapFilters.insertAdjacentElement('beforebegin', popup);
-    var popupClose = popup.querySelector('.popup__close');
-    popupClose.addEventListener('click', function () {
-      popup.remove();
-    });
+  window.card = {
+    renderCard: function (data) {
+      if (document.querySelector('.popup')) {
+        document.querySelector('.popup').remove();
+      }
+      var popup = createCard(data);
+      mapFilters.insertAdjacentElement('beforebegin', popup);
+      var popupClose = popup.querySelector('.popup__close');
+      popupClose.addEventListener('click', function () {
+        popup.remove();
+      });
 
-    window.setCurrentPopup(popup);
+      window.unit.setCurrentPopup(popup);
+    }
   };
 })();
