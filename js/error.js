@@ -10,7 +10,6 @@
 
   errorButton.addEventListener('click', function () {
     errorPopup.remove();
-    window.pin.renderPins();
   });
 
   window.error = errorPopup;

@@ -37,14 +37,14 @@
   var renderFormSuccessHandler = function () {
     document.querySelector('main').insertAdjacentElement('afterbegin', successPopup);
     window.unit.setCurrentPopup(successPopup);
-    pageReset();
+    resetPage();
   };
 
   var renderFormErrorHandler = function () {
     document.querySelector('main').insertAdjacentElement('afterbegin', window.error);
   };
 
-  var pageReset = function () {
+  var resetPage = function () {
     adForm.reset();
     var adsPins = Array.from(document.querySelectorAll('.map__pin:not(.map__pin--main)'));
     adsPins.forEach(function (it) {
@@ -101,6 +101,10 @@
 
     window.data.save(data, renderFormSuccessHandler, renderFormErrorHandler);
   });
+
+  // adForm.addEventListener('reset', function (evt) {
+
+  // });
 
   successPopup.addEventListener('click', function () {
     successPopup.remove();
