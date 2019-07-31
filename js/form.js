@@ -2,6 +2,7 @@
 (function () {
   var adForm = document.querySelector('.ad-form');
   var adInputs = adForm.querySelectorAll('input, select');
+  // var adImagesInput = adForm.querySelectorAll('.ad-form__input');
   var submitButton = adForm.querySelector('.ad-form__submit');
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');

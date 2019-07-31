@@ -42,9 +42,7 @@
         photoBox.appendChild(img);
         photoContainer.appendChild(photoBox);
       }
-      window.sorting(photoContainer, function (it) {
-        console.log(it);
-      });
+      window.sorting(photoContainer);
     });
 
     reader.readAsDataURL(photo);
