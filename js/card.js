@@ -58,7 +58,7 @@
   };
 
   window.card = {
-    renderCard: function (data) {
+    render: function (data) {
       if (document.querySelector('.popup')) {
         document.querySelector('.popup').remove();
       }

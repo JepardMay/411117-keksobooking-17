@@ -26,7 +26,7 @@
     }
   });
 
-  var addPhoto = function (photo) {
+  var addPhoto = function (photo, i) {
     var reader = new FileReader();
 
     reader.addEventListener('load', function () {
@@ -35,9 +35,16 @@
       img.width = '70';
       img.height = '70';
       img.src = reader.result;
-      var photoBox = photoPreview.cloneNode();
-      photoBox.appendChild(img);
-      photoContainer.appendChild(photoBox);
+      if (i === 0) {
+        photoPreview.appendChild(img);
+      } else {
+        var photoBox = photoPreview.cloneNode();
+        photoBox.appendChild(img);
+        photoContainer.appendChild(photoBox);
+      }
+      window.sorting(photoContainer, function (it) {
+        console.log(it);
+      });
     });
 
     reader.readAsDataURL(photo);
@@ -52,19 +59,22 @@
         return photoName.endsWith(it);
       });
       if (matches) {
-        addPhoto(photo);
+        window.photo.resetImages();
+        addPhoto(photo, i);
       }
     }
   });
 
   window.photo = {
-    resetPhoto: function () {
-      avatarPreview.src = '';
+    resetAvatar: function () {
+      avatarPreview.src = 'img/muffin-grey.svg';
+    },
+    resetImages: function () {
       var images = photoContainer.querySelectorAll('.ad-form__photo');
+      images[0].innerHTML = '';
       for (var j = 1; j < images.length; j++) {
-        images[j].remove();
+        photoContainer.removeChild(images[j]);
       }
-      photoPreview.innerHTML = '';
     }
   };
 })();

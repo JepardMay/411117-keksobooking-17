@@ -41,7 +41,7 @@
 
   window.map = {
     setDefaultMainPinPosition: function () {
-      addressInput.value = defaultMainPin.coords;
+      addressInput.defaultValue = defaultMainPin.coords;
       mapMainPin.style.top = defaultMainPin.top + 'px';
       mapMainPin.style.left = defaultMainPin.left + 'px';
     }
@@ -84,7 +84,7 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      window.pin.renderPins();
+      window.pin.render();
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
       window.form.setDisabled(adInputs);

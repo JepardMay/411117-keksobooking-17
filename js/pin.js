@@ -50,7 +50,7 @@
 
   var addPinClickHandler = function (pin, data) {
     pin.addEventListener('click', function () {
-      window.card.renderCard(data);
+      window.card.render(data);
     });
   };
 
@@ -166,7 +166,7 @@
   };
 
   window.pin = {
-    renderPins: function () {
+    render: function () {
       window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
     }
   };
