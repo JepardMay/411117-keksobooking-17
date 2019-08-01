@@ -2,6 +2,7 @@
 (function () {
   var adForm = document.querySelector('.ad-form');
   var adInputs = adForm.querySelectorAll('input, select');
+  var submitButton = adForm.querySelector('.ad-form__submit');
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var successPopup = successTemplate.cloneNode(true);
@@ -37,15 +38,19 @@
   var renderFormSuccessHandler = function () {
     document.querySelector('main').insertAdjacentElement('afterbegin', successPopup);
     window.unit.setCurrentPopup(successPopup);
-    pageReset();
+    submitButton.removeAttribute('disabled');
+    resetPage();
   };
 
   var renderFormErrorHandler = function () {
     document.querySelector('main').insertAdjacentElement('afterbegin', window.error);
+    submitButton.removeAttribute('disabled');
   };
 
-  var pageReset = function () {
+  var resetPage = function () {
     adForm.reset();
+    window.photo.resetAvatar();
+    window.photo.resetImages();
     var adsPins = Array.from(document.querySelectorAll('.map__pin:not(.map__pin--main)'));
     adsPins.forEach(function (it) {
       it.remove();
@@ -96,10 +101,28 @@
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-
+    submitButton.setAttribute('disabled', 'disabled');
     var data = new FormData(adForm);
 
+    var images = data.getAll('images');
+    data.delete('images');
+
+    var imageNames = window.photo.getImageList();
+
+    for (var j = 0; j < imageNames.length; j++) {
+      var files = images.filter(function (file) {
+        return file.name === imageNames[j];
+      });
+      if (files.length > 0) {
+        data.append('images', files[0], imageNames[j]);
+      }
+    }
+
     window.data.save(data, renderFormSuccessHandler, renderFormErrorHandler);
+  });
+
+  adForm.addEventListener('reset', function () {
+    resetPage();
   });
 
   successPopup.addEventListener('click', function () {
