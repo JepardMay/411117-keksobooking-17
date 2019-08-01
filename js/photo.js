@@ -35,6 +35,7 @@
       img.width = '70';
       img.height = '70';
       img.src = reader.result;
+      img.dataset.filename = photo.name;
       if (i === 0) {
         photoPreview.appendChild(img);
       } else {
@@ -73,6 +74,14 @@
       for (var j = 1; j < images.length; j++) {
         photoContainer.removeChild(images[j]);
       }
+    },
+    getImageList: function () {
+      var names = [];
+      var images = Array.from(photoContainer.querySelectorAll('.ad-form__photo img'));
+      images.forEach(function (it) {
+        names.push(it.dataset.filename);
+      });
+      return names;
     }
   };
 })();

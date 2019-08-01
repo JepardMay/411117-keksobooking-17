@@ -2,7 +2,6 @@
 (function () {
   var adForm = document.querySelector('.ad-form');
   var adInputs = adForm.querySelectorAll('input, select');
-  // var adImagesInput = adForm.querySelectorAll('.ad-form__input');
   var submitButton = adForm.querySelector('.ad-form__submit');
 
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -104,6 +103,20 @@
     evt.preventDefault();
     submitButton.setAttribute('disabled', 'disabled');
     var data = new FormData(adForm);
+
+    var images = data.getAll('images');
+    data.delete('images');
+
+    var imageNames = window.photo.getImageList();
+
+    for (var j = 0; j < imageNames.length; j++) {
+      var files = images.filter(function (file) {
+        return file.name === imageNames[j];
+      });
+      if (files.length > 0) {
+        data.append('images', files[0], imageNames[j]);
+      }
+    }
 
     window.data.save(data, renderFormSuccessHandler, renderFormErrorHandler);
   });
