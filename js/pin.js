@@ -32,11 +32,6 @@
   var houseFeatureConditioner = houseFeatureSelect.querySelector('#filter-conditioner');
 
   filtersForm.addEventListener('change', function () {
-    houseType = houseTypeSelect.value;
-    housePrice = housePriceSelect.value;
-    houseRoom = houseRoomSelect.value;
-    houseGuest = houseGuestSelect.value;
-
     window.debounce(function () {
       updatePins(pins);
     });
@@ -83,6 +78,11 @@
   };
 
   var filterPins = function (data) {
+    houseType = houseTypeSelect.value;
+    housePrice = housePriceSelect.value;
+    houseRoom = houseRoomSelect.value;
+    houseGuest = houseGuestSelect.value;
+
     var filterData = data;
     if (houseType !== 'any') {
       filterData = filterData.filter(function (it) {

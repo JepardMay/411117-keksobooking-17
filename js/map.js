@@ -39,7 +39,7 @@
   mapCheckboxs.forEach(function (it) {
     it.addEventListener('keydown', function (enterEvt) {
       if (enterEvt.keyCode === ENTER_KEYCODE) {
-        it.checked = !it.checked;
+        it.click();
       }
     });
   });
