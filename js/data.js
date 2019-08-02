@@ -1,11 +1,11 @@
 'use strict';
-window.data = (function () {
+(function () {
   var Url = {
     LOAD: 'https://js.dump.academy/keksobooking/data',
     SAVE: 'https://js.dump.academy/keksobooking'
   };
 
-  return {
+  window.data = {
     load: function (onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';

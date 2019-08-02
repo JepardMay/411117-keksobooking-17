@@ -3,6 +3,10 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var RENDERED_PINS_MAX_QUANTITY = 5;
+  var Price = {
+    MIDDLE: 10000,
+    HIGH: 50000
+  };
 
   var pins = [];
 
@@ -67,11 +71,11 @@
   };
 
   var setPriceRange = function (price) {
-    if (price < 10000) {
+    if (price < Price.MIDDLE) {
       return 'low';
-    } else if (price >= 10000 && price < 50000) {
+    } else if (price >= Price.MIDDLE && price < Price.HIGH) {
       return 'middle';
-    } else if (price >= 50000) {
+    } else if (price >= Price.HIGH) {
       return 'high';
     }
 
