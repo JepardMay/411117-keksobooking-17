@@ -36,6 +36,14 @@
     return Math.round((posX + width / 2)) + ', ' + Math.round((posY + height));
   };
 
+  mapCheckboxs.forEach(function (it) {
+    it.addEventListener('keydown', function (enterEvt) {
+      if (enterEvt.keyCode === ENTER_KEYCODE) {
+        it.checked = !it.checked;
+      }
+    });
+  });
+
   var defaultMainPin = {
     coords: getElementCoords(mapMainPin, MAIN_PIN_WIDTH, (MAIN_PIN_HEIGHT / 2)),
     top: mapMainPin.offsetTop,
@@ -92,13 +100,6 @@
       adForm.classList.remove('ad-form--disabled');
       window.form.setDisabled(adInputs);
       window.form.setDisabled(mapFiltersInputs);
-      mapCheckboxs.forEach(function (it) {
-        it.addEventListener('keydown', function (enterEvt) {
-          if (enterEvt.keyCode === ENTER_KEYCODE) {
-            it.checked = !it.checked;
-          }
-        });
-      });
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
