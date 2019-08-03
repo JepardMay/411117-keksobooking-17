@@ -32,6 +32,9 @@
   var houseFeatureConditioner = houseFeatureSelect.querySelector('#filter-conditioner');
 
   filtersForm.addEventListener('change', function () {
+    if (document.querySelector('.popup')) {
+      document.querySelector('.popup').remove();
+    }
     window.debounce(function () {
       updatePins(pins);
     });
@@ -49,6 +52,8 @@
 
   var addPinClickHandler = function (pin, data) {
     pin.addEventListener('click', function () {
+      window.pin.active();
+      pin.classList.add('.map__pin--active');
       window.card.render(data);
     });
   };
@@ -172,6 +177,13 @@
   window.pin = {
     render: function () {
       window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
+    },
+    active: function () {
+      var activePin = document.querySelector('.map__pin--active');
+      console.log(activePin);
+      if (activePin) {
+        activePin.classList.remove('.map__pin--active');
+      }
     }
   };
 

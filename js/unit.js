@@ -11,6 +11,7 @@
 
   window.addEventListener('keydown', function (evt) {
     if (currentPopup && evt.keyCode === ESC_KEYCODE) {
+      window.pin.active();
       currentPopup.remove();
     }
   });
