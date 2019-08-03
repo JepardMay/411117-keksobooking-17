@@ -67,7 +67,7 @@
       var popupClose = popup.querySelector('.popup__close');
       popupClose.addEventListener('click', function () {
         popup.remove();
-        window.pin.deactiavte();
+        window.pin.deactivate();
       });
 
       window.unit.setCurrentPopup(popup);

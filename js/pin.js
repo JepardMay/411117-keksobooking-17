@@ -52,7 +52,7 @@
 
   var addPinClickHandler = function (pin, data) {
     pin.addEventListener('click', function () {
-      window.pin.deactiavte();
+      window.pin.deactivate();
       pin.classList.add('map__pin--active');
       window.card.render(data);
     });
@@ -178,7 +178,7 @@
     render: function () {
       window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
     },
-    deactiavte: function () {
+    deactivate: function () {
       var activePin = document.querySelector('.map__pin--active');
       if (activePin) {
         activePin.classList.remove('map__pin--active');
