@@ -52,8 +52,8 @@
 
   var addPinClickHandler = function (pin, data) {
     pin.addEventListener('click', function () {
-      window.pin.active();
-      pin.classList.add('.map__pin--active');
+      window.pin.deactiavte();
+      pin.classList.add('map__pin--active');
       window.card.render(data);
     });
   };
@@ -178,11 +178,10 @@
     render: function () {
       window.data.load(renderPinSuccessHandler, renderPinErrorHandler);
     },
-    active: function () {
+    deactiavte: function () {
       var activePin = document.querySelector('.map__pin--active');
-      console.log(activePin);
       if (activePin) {
-        activePin.classList.remove('.map__pin--active');
+        activePin.classList.remove('map__pin--active');
       }
     }
   };
